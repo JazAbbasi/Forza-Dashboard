@@ -1,6 +1,14 @@
 import socket
 import threading
 
+class GetIPAddr:
+    def getIp():
+        hostname = socket.gethostname()
+        IPAddr = socket.gethostbyname(hostname)
+        return IPAddr
+
+
+
 class TelemetryReceiver:
     def __init__(self, port=57312):
         self.host = "0.0.0.0"

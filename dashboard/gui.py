@@ -1,4 +1,14 @@
+import os
+import math
 from tkinter import *
+from PIL import Image, ImageTk
+from .telemetry import GetIPAddr
+
+
+ip = GetIPAddr
+IPAddr = ip.getIp()
+print(IPAddr)
+
 
 screen = Tk()
 screen.attributes('-fullscreen', True)
@@ -15,7 +25,8 @@ canvas.pack(fill="both", expand=True)
 # Center point
 cx = screen_width // 2
 cy = screen_height // 2
-
+print(screen_width)
+print(screen_height)
 
 # Gear
 gear = Label(screen, font=("Impact", 250), text="N", fg="white", bg="#3f3f3f")
@@ -24,10 +35,10 @@ gear_label = Label(screen, font=("Impact", 60), text="Gear", bg="#3f3f3f", fg="w
 canvas.create_window(cx, cy + 160, window=gear_label)
 
 # RPM
-rpm = Label(screen, font=("Impact", 100), text="00000", fg="white", bg="#3f3f3f")
-canvas.create_window(cx, cy - 300, window=rpm)
-rpm_label = Label(screen, font=("Impact", 30), text="RPM", fg="white", bg="#3f3f3f")
-canvas.create_window(cx, cy - 210, window=rpm_label)
+rpm = Label(screen, font=("Impact", 80), text="00000", fg="white", bg="#3f3f3f")
+canvas.create_window(cx, cy - 250, window=rpm)
+rpm_label = Label(screen, font=("Impact", 20), text="RPM", fg="white", bg="#3f3f3f")
+canvas.create_window(cx, cy - 180, window=rpm_label)
 
 # Speed
 speed = Label(screen, font=("Impact", 100), text="000", fg="white", bg="#3f3f3f")
@@ -37,19 +48,66 @@ canvas.create_window(cx, cy + 370, window=speed_label)
 
 # Lap Number
 lap = Label(screen, font=("Impact", 70), text="00", fg="black")
-canvas.create_window(cx-530, cy-330, window=lap)
+canvas.create_window(cx-cx+220, cy-cy+110, window=lap, anchor="nw")
 lap_label = Label(screen, font=("Impact", 30), text="Lap", fg="white", bg="#3f3f3f")
-canvas.create_window(cx-530, cy-230, window=lap_label)
+canvas.create_window(cx-cx+16+220, cy-cy+236, window=lap_label, anchor="nw")
 
 # Position
 pos = Label(screen, font=("Impact", 70), text="00", fg="black")
-canvas.create_window(cx-700, cy-330, window=pos)
+canvas.create_window(cx-cx+40, cy-cy+110, window=pos, anchor="nw")
 pos_label = Label(screen, font=("Impact", 30), text="POS", fg="white", bg="#3f3f3f")
-canvas.create_window(cx-700, cy-230, window=pos_label)
+canvas.create_window(cx-cx+16+40, cy-cy+236, window=pos_label, anchor="nw")
 
 # Current Lap
-current_lap_label = Label(screen, font=("Impact", 50), text="Current lap", fg="white", bg="#3f3f3f")
-canvas.create_window(cx-770, cy, window=current_lap_label)
+current_lap = Label(screen, font=("Impact", 50), text="00:00:000", fg="white", bg="#3f3f3f")
+canvas.create_window(cx-cx+20, cy, window=current_lap, anchor="w")
+
+# last Lap
+last_lap = Label(screen, font=("Impact", 50), text="00:00:000", fg="#B6B63F", bg="#3f3f3f")
+canvas.create_window(cx-cx+20, cy+80, window=last_lap, anchor="w")
+
+# best Lap
+best_lap = Label(screen, font=("Impact", 50), text="00:00:000", fg="#008200", bg="#3f3f3f")
+canvas.create_window(cx-cx+20, cy+160, window=best_lap, anchor="w")
+
+# throttle
+thrtl = Label(screen, font=("Impact", 40), text="000", fg="white", bg="#3f3f3f")
+canvas.create_window(cx+300, cy-cy+200, window=thrtl)
+thrtl_label = Label(screen, font=("Impact", 20), text="Thrtl", fg="#B6B63F", bg="#3f3f3f")
+canvas.create_window(cx+300, cy-cy+250, window=thrtl_label)
+
+# brake
+brake = Label(screen, font=("Impact", 40), text="000", fg="white", bg="#3f3f3f")
+canvas.create_window(cx+430, cy-cy+200, window=brake)
+brake_label = Label(screen, font=("Impact", 20), text="Brake", fg="#B6B63F", bg="#3f3f3f")
+canvas.create_window(cx+430, cy-cy+250, window=brake_label)
+
+# Fuel
+fuel = Label(screen, font=("Impact", 30), text="000", fg="white", bg="#3f3f3f")
+canvas.create_window(cx+380, cy-30, window=fuel)
+fuel_img_path = os.path.join("assets", "gas-station.png")
+fuel_img = Image.open(fuel_img_path)
+fuel_img_resized = fuel_img.resize((40, 40)) 
+fuel_img = ImageTk.PhotoImage(fuel_img_resized)
+fuel_icon = Label(screen, image=fuel_img, bg="#3f3f3f")
+canvas.create_window(cx+320, cy-30, window=fuel_icon)
+
+# Tire Tempreture
+tire_temp_FL = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
+canvas.create_window(cx+350-50, cy+200-60, window=tire_temp_FL)
+tire_temp_FR = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
+canvas.create_window(cx+350+50, cy+200-60, window=tire_temp_FR)
+tire_temp_RL = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
+canvas.create_window(cx+350-50, cy+200+60, window=tire_temp_RL)
+tire_temp_RR = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
+canvas.create_window(cx+350+50, cy+200+60, window=tire_temp_RR)
+tire_temp_img_path = os.path.join("assets", "weather.png")
+tire_temp_img = Image.open(tire_temp_img_path)
+tire_temp_img_resized = tire_temp_img.resize((60, 60)) 
+tire_temp_img = ImageTk.PhotoImage(tire_temp_img_resized)
+tire_temp_icon = Label(screen, image=tire_temp_img, bg="#3f3f3f")
+canvas.create_window(cx+350, cy+200, window=tire_temp_icon)
+
 
 def exit_fullscreen(event):
     screen.attributes("-fullscreen", False)
@@ -61,4 +119,23 @@ screen.bind("<Escape>", exit_fullscreen)
 screen.bind("<F11>", enter_fullscreen)
 
 
-screen.mainloop()
+
+def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR):
+    def update_values():
+        speed.config(text=int(SPEED))
+        gear.config(text=GEAR)
+        rpm.config(text= int(RPM))
+        pos.config(text=POS)
+        current_lap.config(text=LAP_TIME)
+        last_lap.config(text=LAST_LAP_TIME)
+        best_lap.config(text=BEST_LAP_TIME)
+        lap.config(text=LAP_NUMBER)
+        thrtl.config(text=ACCEL)
+        tire_temp_FL.config(text=math.ceil(((TTFL-32)*5/9) * 10) / 10)
+        tire_temp_FR.config(text=math.ceil(((TTFR-32)*5/9) * 10) / 10)
+        tire_temp_RL.config(text=math.floor(((TTRL-32)*5/9) * 10) / 10)
+        tire_temp_RR.config(text=math.floor(((TTRR-32)*5/9) * 10) / 10)
+    screen.after(0, update_values)
+
+def launch_gui():
+    screen.mainloop()
