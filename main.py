@@ -34,7 +34,8 @@ def handle_data(data):
             
 
         }
-        print("yo")
+        
+        print("split=======")
         print("Speed:", parsed["speed_kph"]*3.6, "Gear:",
                parsed["gear"], "rpm:", parsed["rpm"], "max_rpm", parsed["max_rpm"], "fuel:", parsed["fuel"], "accel:", parsed["accel"], "pos:", parsed["pos"], "lap:", format_time(parsed["lap_time"]), "RL:", parsed["tire_temp_rear_left"], "RR:", parsed["tire_temp_rear_right"])
         update_screen(parsed["speed_kph"]*3.6, parsed["gear"], parsed["rpm"], parsed["pos"], format_time(parsed["lap_time"]), format_time(parsed["last_lap_time"]), format_time(parsed["best_lap_time"]), parsed["lap_number"], parsed["accel"], parsed["tire_temp_front_left"], parsed["tire_temp_front_right"], parsed["tire_temp_rear_left"], parsed["tire_temp_rear_right"], parsed["brake"], parsed["fuel"])

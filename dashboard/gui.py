@@ -203,13 +203,13 @@ def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME,
         last_lap.config(text=LAST_LAP_TIME)
         best_lap.config(text=BEST_LAP_TIME)
         lap.config(text=LAP_NUMBER)
-        thrtl.config(text=ACCEL/2.55)
+        thrtl.config(text=math.ceil((ACCEL/2.55)))
         tire_temp_FL.config(text=math.ceil(((TTFL-32)*5/9) * 10) / 10)
         tire_temp_FR.config(text=math.ceil(((TTFR-32)*5/9) * 10) / 10)
         tire_temp_RL.config(text=math.floor(((TTRL-32)*5/9) * 10) / 10)
         tire_temp_RR.config(text=math.floor(((TTRR-32)*5/9) * 10) / 10)
-        brake.config(text=BRAKE/2.55)
-        fuel.config(text=FUEL)
+        brake.config(text=math.ceil((BRAKE/2.55)))
+        fuel.config(text=f"{(FUEL*100):05.2f}")
     screen.after(0, update_values)
 
 def set_start_callback(callback):
