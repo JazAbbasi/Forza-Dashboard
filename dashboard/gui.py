@@ -4,12 +4,24 @@ from tkinter import *
 from tkinter import font as tkFont
 import ctypes
 from PIL import Image, ImageTk
-from telemetry import GetIPAddr
+from dashboard.telemetry import GetIPAddr
+
+
+
+
 
 def switch_to_dashboard():
+    global selected_port, selected_game
+    try:
+        selected_port = int(port_number_entry.get())
+    except ValueError:
+        selected_port = 1024
+    selected_game = "FH" if fh_btn["relief"] == "sunken" else "FM"
     initial_canvas.pack_forget()
     dashboard_canvas.pack(fill="both", expand=True)
     screen.attributes("-fullscreen", True)
+    if start_callback:
+        start_callback(selected_port, selected_game)
 
 def select_choice(choice):
     if choice == 1:
@@ -58,7 +70,7 @@ initial_canvas.create_window(cx, cy-300, window=title)
 
 instructions_text = (
     "Instructions:\n"
-    '- Your IP adress is: ' + IPAddr + '. Type this number in FORZA under "Data Output IP"\n'
+    '- Your IP adress is: "' + IPAddr + '". Type this number in FORZA under "Data Output IP"\n'
     '- Enter a port number below, make sure it is identical to what is entered in the game settings\n' 
     '- Select game(fh5 + fh4 / fm7)\n'
     '- Press start to begin recieving data\n'
@@ -69,6 +81,8 @@ initial_canvas.create_window(cx, cy-50, window=instructions_label)
 
 port_number_label = Label(screen,text="Port Number: ",font=("Segoe UI", 20), fg="black", bg="#ffffff")
 initial_canvas.create_window(cx-300, cy+170, window=port_number_label)
+port_number_label_2 = Label(screen,text="(0 - 65536)",font=("Segoe UI", 16), fg="black", bg="#ffffff")
+initial_canvas.create_window(cx-300, cy+200, window=port_number_label_2)
 port_number_entry = Entry(screen, bg='white', borderwidth=1, relief='solid', font=Camieis_small, width=10)
 initial_canvas.create_window(cx-160, cy+173, window=port_number_entry)
 
@@ -179,7 +193,7 @@ screen.bind("<F11>", enter_fullscreen)
 
 
 
-def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR):
+def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR, BRAKE, FUEL):
     def update_values():
         speed.config(text=int(SPEED))
         gear.config(text=GEAR)
@@ -189,14 +203,20 @@ def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME,
         last_lap.config(text=LAST_LAP_TIME)
         best_lap.config(text=BEST_LAP_TIME)
         lap.config(text=LAP_NUMBER)
-        thrtl.config(text=ACCEL)
+        thrtl.config(text=ACCEL/2.55)
         tire_temp_FL.config(text=math.ceil(((TTFL-32)*5/9) * 10) / 10)
         tire_temp_FR.config(text=math.ceil(((TTFR-32)*5/9) * 10) / 10)
         tire_temp_RL.config(text=math.floor(((TTRL-32)*5/9) * 10) / 10)
         tire_temp_RR.config(text=math.floor(((TTRR-32)*5/9) * 10) / 10)
+        brake.config(text=BRAKE/2.55)
+        fuel.config(text=FUEL)
     screen.after(0, update_values)
+
+def set_start_callback(callback):
+    global start_callback
+    start_callback = callback
 
 def launch_gui():
     screen.mainloop()
 
-screen.mainloop()
+
