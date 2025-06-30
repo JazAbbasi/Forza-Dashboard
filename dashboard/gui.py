@@ -183,6 +183,181 @@ dashboard_canvas.create_window(cx+cx-230, cy+200, window=tire_temp_icon)
 temp_degree_sign = Label(screen,font=("Impact", 17), text="°C",fg="#B6B63F", bg="#3f3f3f")
 dashboard_canvas.create_window(cx+cx-230+25, cy+200-15, window=temp_degree_sign)
 
+#LEDs setup
+grey_led_path = os.path.join("assets", "grey_led.png")
+grey_led = Image.open(grey_led_path)
+grey_led_resized = grey_led.resize((50, 50)) 
+grey_led_img = ImageTk.PhotoImage(grey_led_resized)
+
+yel_led_path = os.path.join("assets", "yellow_led.png")
+yel_led = Image.open(yel_led_path)
+yel_led_resized = yel_led.resize((50, 50)) 
+yel_led_img = ImageTk.PhotoImage(yel_led_resized)
+
+green_led_path = os.path.join("assets", "green_led.png")
+green_led = Image.open(green_led_path)
+green_led_resized = green_led.resize((50, 50)) 
+green_led_img = ImageTk.PhotoImage(green_led_resized)
+
+blue_led_path = os.path.join("assets", "blue_led.png")
+blue_led = Image.open(blue_led_path)
+blue_led_resized = blue_led.resize((50, 50)) 
+blue_led_img = ImageTk.PhotoImage(blue_led_resized)
+
+red_led_path = os.path.join("assets", "red_led.png")
+red_led = Image.open(red_led_path)
+red_led_resized = red_led.resize((50, 50)) 
+red_led_img = ImageTk.PhotoImage(red_led_resized)
+
+# Grey LEDs
+grey_led_1 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-175, cy-350, window=grey_led_1)
+grey_led_2 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-105, cy-350, window=grey_led_2)
+grey_led_3 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-35, cy-350, window=grey_led_3)
+grey_led_4 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+35, cy-350, window=grey_led_4)
+grey_led_5 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+105, cy-350, window=grey_led_5)
+grey_led_6 = Label(screen, image=grey_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+175, cy-350, window=grey_led_6)
+
+# Yellow LEDs
+yel_led_1 = Label(screen, image=yel_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-175, cy-350, window=yel_led_1)
+yel_led_2 = Label(screen, image=yel_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-105, cy-350, window=yel_led_2)
+# Green LEDs
+green_led_1 = Label(screen, image=green_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-35, cy-350, window=green_led_1)
+green_led_2 = Label(screen, image=green_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+35, cy-350, window=green_led_2)
+# Blue LEDs
+blue_led_1 = Label(screen, image=blue_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+105, cy-350, window=blue_led_1)
+blue_led_2 = Label(screen, image=blue_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+175, cy-350, window=blue_led_2)
+# Red LEDs
+red_led_1 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-175, cy-350, window=red_led_1)
+red_led_2 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-105, cy-350, window=red_led_2)
+red_led_3 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx-35, cy-350, window=red_led_3)
+red_led_4 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+35, cy-350, window=red_led_4)
+red_led_5 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+105, cy-350, window=red_led_5)
+red_led_6 = Label(screen, image=red_led_img, bg="#3f3f3f")
+dashboard_canvas.create_window(cx+175, cy-350, window=red_led_6)
+# Hides LEDs
+class change_led_visibility:
+    def hide_leds():
+        yel_led_1.lower()
+        yel_led_2.lower()
+        green_led_1.lower()
+        green_led_2.lower()
+        blue_led_1.lower()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_1():
+        yel_led_1.lift()
+        yel_led_2.lower()
+        green_led_1.lower()
+        green_led_2.lower()
+        blue_led_1.lower()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_2():
+        yel_led_1.lift()
+        yel_led_2.lift()
+        green_led_1.lower()
+        green_led_2.lower()
+        blue_led_1.lower()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_3():
+        yel_led_1.lift()
+        yel_led_2.lift()
+        green_led_1.lift()
+        green_led_2.lower()
+        blue_led_1.lower()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_4():
+        yel_led_1.lift()
+        yel_led_2.lift()
+        green_led_1.lift()
+        green_led_2.lift()
+        blue_led_1.lower()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_5():
+        yel_led_1.lift()
+        yel_led_2.lift()
+        green_led_1.lift()
+        green_led_2.lift()
+        blue_led_1.lift()
+        blue_led_2.lower()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_6():
+        yel_led_1.lift()
+        yel_led_2.lift()
+        green_led_1.lift()
+        green_led_2.lift()
+        blue_led_1.lift()
+        blue_led_2.lift()
+        red_led_1.lower()
+        red_led_2.lower()
+        red_led_3.lower()
+        red_led_4.lower()
+        red_led_5.lower()
+        red_led_6.lower()
+    def stage_7():
+        yel_led_1.lower()
+        yel_led_2.lower()
+        green_led_1.lower()
+        green_led_2.lower()
+        blue_led_1.lower()
+        blue_led_2.lift()
+        red_led_1.lift()
+        red_led_2.lift()
+        red_led_3.lift()
+        red_led_4.lift()
+        red_led_5.lift()
+        red_led_6.lift()
+
 
 def exit_fullscreen(event):
     screen.attributes("-fullscreen", False)
@@ -194,10 +369,30 @@ screen.bind("<Escape>", exit_fullscreen)
 screen.bind("<F11>", enter_fullscreen)
 
 
-
-def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR, BRAKE, FUEL):
+change_led_visibility.hide_leds()
+def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR, BRAKE, FUEL, MAX_RPM):
     if GEAR == 0:
         GEAR = "R"
+    def update_leds():
+        ratio = RPM/MAX_RPM
+        if ratio >= 0.85:
+            change_led_visibility.hide_leds()
+            change_led_visibility.stage_7()
+        elif ratio >= 0.73:
+            change_led_visibility.stage_6()
+        elif ratio >= 0.67:
+            change_led_visibility.stage_5()
+        elif ratio >= 0.50:
+            change_led_visibility.stage_4()
+        elif ratio >= 0.35:
+            change_led_visibility.stage_3()
+        elif ratio >= 0.25:
+            change_led_visibility.stage_2()
+        else:
+            change_led_visibility.stage_1()
+
+
+
     def update_values():
         speed.config(text=int(SPEED))
         gear.config(text=GEAR)
@@ -214,6 +409,8 @@ def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME,
         tire_temp_RR.config(text=math.floor(((TTRR-32)*5/9) * 10) / 10)
         brake.config(text=f"{math.ceil((BRAKE/2.55)):03}")
         fuel.config(text=f"{(FUEL*100):05.2f}")
+    if MAX_RPM != 0:
+        update_leds()
     screen.after(0, update_values)
 
 def set_start_callback(callback):
