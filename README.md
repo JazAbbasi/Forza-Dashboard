@@ -8,7 +8,9 @@
 ![Dashboard Screenshot](assets/dashboard_screenshot_2.png)
 
 # Installation
-You do not need to download or build the source code to use this app. Simply download the pre-built executable (.exe) file from the Releases section on this GitHub page and run it directly on your Windows computer.
+You do not need to download or build the source code to use this app. Simply download "dist.zip" zip file from the Releases section on this GitHub page, extract its content, and run "main.exe" directly.
+NOTE: Microsoft Defender may block the app from running, if you recieve a popup, please click on "More Info", then "Run Anyway" 
+
 
 No additional installation or dependencies are required.
 # Attributions
