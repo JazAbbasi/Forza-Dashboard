@@ -8,7 +8,7 @@
 ![Dashboard Screenshot](assets/dashboard_screenshot_2.png)
 
 # Installation
-You do not need to download or build the source code to use this app. Simply download "dist.zip" zip file from the Releases section on this GitHub page, extract its content, and run "main.exe" directly.
+You do not need to download or build the source code to use this app. Simply download "dist.zip" zip file by clicking on the latest release on this GitHub page, extract its content, and run "main.exe" directly.
 NOTE: Microsoft Defender may block the app from running, if you recieve a popup, please click on "More Info", then "Run Anyway" 
 
 
