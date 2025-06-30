@@ -103,8 +103,8 @@ initial_canvas.create_window(cx+305, cy+173, window=next_button)
 # Gear
 gear = Label(screen, font=("Impact", 250), text="N", fg="white", bg="#3f3f3f")
 dashboard_canvas.create_window(cx, cy, window=gear)
-gear_label = Label(screen, font=("Impact", 60), text="Gear", bg="#3f3f3f", fg="white")
-dashboard_canvas.create_window(cx, cy + 160, window=gear_label)
+gear_label = Label(screen, font=("Impact", 41), text="Gear", bg="#3f3f3f", fg="white")
+dashboard_canvas.create_window(cx, cy + 173, window=gear_label)
 
 
 # RPM
@@ -145,41 +145,43 @@ dashboard_canvas.create_window(cx-cx+20, cy+160, window=best_lap, anchor="w")
 
 # throttle
 thrtl = Label(screen, font=("Impact", 40), text="000", fg="white", bg="#3f3f3f")
-dashboard_canvas.create_window(cx+300, cy-cy+200, window=thrtl)
+dashboard_canvas.create_window(cx+cx-300, cy-cy+200, window=thrtl)
 thrtl_label = Label(screen, font=("Impact", 20), text="Thrtl", fg="#B6B63F", bg="#3f3f3f")
-dashboard_canvas.create_window(cx+300, cy-cy+250, window=thrtl_label)
+dashboard_canvas.create_window(cx+cx-300, cy-cy+250, window=thrtl_label)
 
 # brake
 brake = Label(screen, font=("Impact", 40), text="000", fg="white", bg="#3f3f3f")
-dashboard_canvas.create_window(cx+430, cy-cy+200, window=brake)
+dashboard_canvas.create_window(cx+cx-160, cy-cy+200, window=brake)
 brake_label = Label(screen, font=("Impact", 20), text="Brake", fg="#B6B63F", bg="#3f3f3f")
-dashboard_canvas.create_window(cx+430, cy-cy+250, window=brake_label)
+dashboard_canvas.create_window(cx+cx-160, cy-cy+250, window=brake_label)
 
 # Fuel
-fuel = Label(screen, font=("Impact", 30), text="000", fg="white", bg="#3f3f3f")
-dashboard_canvas.create_window(cx+380, cy-30, window=fuel)
+fuel = Label(screen, font=("Impact", 30), text="000.00", fg="white", bg="#3f3f3f")
+dashboard_canvas.create_window(cx+cx-200, cy-30, window=fuel)
 fuel_img_path = os.path.join("assets", "gas-station.png")
 fuel_img = Image.open(fuel_img_path)
 fuel_img_resized = fuel_img.resize((40, 40)) 
 fuel_img = ImageTk.PhotoImage(fuel_img_resized)
 fuel_icon = Label(screen, image=fuel_img, bg="#3f3f3f")
-dashboard_canvas.create_window(cx+320, cy-30, window=fuel_icon)
+dashboard_canvas.create_window(cx+cx-280, cy-30, window=fuel_icon)
 
 # Tire Tempreture
 tire_temp_FL = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
-dashboard_canvas.create_window(cx+350-50, cy+200-60, window=tire_temp_FL)
+dashboard_canvas.create_window(cx+cx-230-50, cy+200-60, window=tire_temp_FL)
 tire_temp_FR = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
-dashboard_canvas.create_window(cx+350+50, cy+200-60, window=tire_temp_FR)
+dashboard_canvas.create_window(cx+cx-230+50, cy+200-60, window=tire_temp_FR)
 tire_temp_RL = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
-dashboard_canvas.create_window(cx+350-50, cy+200+60, window=tire_temp_RL)
+dashboard_canvas.create_window(cx+cx-230-50, cy+200+60, window=tire_temp_RL)
 tire_temp_RR = Label(screen, font=("Impact", 30), text="000", fg="black", bg="#FFFFFF")
-dashboard_canvas.create_window(cx+350+50, cy+200+60, window=tire_temp_RR)
+dashboard_canvas.create_window(cx+cx-230+50, cy+200+60, window=tire_temp_RR)
 tire_temp_img_path = os.path.join("assets", "weather.png")
 tire_temp_img = Image.open(tire_temp_img_path)
 tire_temp_img_resized = tire_temp_img.resize((60, 60)) 
 tire_temp_img = ImageTk.PhotoImage(tire_temp_img_resized)
 tire_temp_icon = Label(screen, image=tire_temp_img, bg="#3f3f3f")
-dashboard_canvas.create_window(cx+350, cy+200, window=tire_temp_icon)
+dashboard_canvas.create_window(cx+cx-230, cy+200, window=tire_temp_icon)
+temp_degree_sign = Label(screen,font=("Impact", 17), text="°C",fg="#B6B63F", bg="#3f3f3f")
+dashboard_canvas.create_window(cx+cx-230+25, cy+200-15, window=temp_degree_sign)
 
 
 def exit_fullscreen(event):
@@ -194,21 +196,23 @@ screen.bind("<F11>", enter_fullscreen)
 
 
 def update_screen(SPEED, GEAR, RPM, POS, LAP_TIME, LAST_LAP_TIME, BEST_LAP_TIME, LAP_NUMBER, ACCEL, TTFL, TTFR, TTRL, TTRR, BRAKE, FUEL):
+    if GEAR == 0:
+        GEAR = "R"
     def update_values():
         speed.config(text=int(SPEED))
         gear.config(text=GEAR)
         rpm.config(text= int(RPM))
-        pos.config(text=POS)
+        pos.config(text=f"{POS:02}")
         current_lap.config(text=LAP_TIME)
         last_lap.config(text=LAST_LAP_TIME)
         best_lap.config(text=BEST_LAP_TIME)
-        lap.config(text=LAP_NUMBER)
-        thrtl.config(text=math.ceil((ACCEL/2.55)))
+        lap.config(text=f"{LAP_NUMBER+1:02}")
+        thrtl.config(text=f"{math.ceil((ACCEL/2.55)):03}")
         tire_temp_FL.config(text=math.ceil(((TTFL-32)*5/9) * 10) / 10)
         tire_temp_FR.config(text=math.ceil(((TTFR-32)*5/9) * 10) / 10)
         tire_temp_RL.config(text=math.floor(((TTRL-32)*5/9) * 10) / 10)
         tire_temp_RR.config(text=math.floor(((TTRR-32)*5/9) * 10) / 10)
-        brake.config(text=math.ceil((BRAKE/2.55)))
+        brake.config(text=f"{math.ceil((BRAKE/2.55)):03}")
         fuel.config(text=f"{(FUEL*100):05.2f}")
     screen.after(0, update_values)
 
