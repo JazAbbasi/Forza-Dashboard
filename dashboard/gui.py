@@ -8,8 +8,6 @@ from dashboard.telemetry import GetIPAddr
 
 
 
-
-
 def switch_to_dashboard():
     global selected_port, selected_game
     try:
@@ -70,7 +68,7 @@ initial_canvas.create_window(cx, cy-300, window=title)
 
 instructions_text = (
     "Instructions:\n"
-    '- Your IP adress is: "' + IPAddr + '". Type this number in FORZA under "Data Output IP"\n'
+    '- Your IP adress is: "' + IPAddr + '". Type this number in the game settings under "Data Output IP"\n'
     '- Enter a port number below, make sure it is identical to what is entered in the game settings\n' 
     '- Select game(fh5 + fh4 / fm7)\n'
     '- Press start to begin recieving data\n'
@@ -96,7 +94,20 @@ select_choice(1)
 next_button = Button(screen, text="Start", font=("Camieis", 24), command=switch_to_dashboard)
 initial_canvas.create_window(cx+305, cy+173, window=next_button)
 
+# return button
+def set_return_callback(callback):
+    global return_callback
+    return_callback = callback
 
+def return_():
+    if return_callback:
+        return_callback()
+    dashboard_canvas.pack_forget()
+    initial_canvas.pack(fill="both", expand=True)
+    screen.attributes("-fullscreen", False)
+
+return_btn = Button(screen, text="Return", font=("Segoe UI", 17, "bold"), bg="#696969", fg="white", relief="solid",borderwidth=3, command=return_)
+dashboard_canvas.create_window(cx - 200, cy+cy-40, window=return_btn)
 
 
 
@@ -361,8 +372,6 @@ class change_led_visibility:
 
 def exit_fullscreen(event):
     screen.attributes("-fullscreen", False)
-    print("workssss")
-
 def enter_fullscreen(event):
     screen.attributes("-fullscreen", True)
 screen.bind("<Escape>", exit_fullscreen)

@@ -1,7 +1,6 @@
 from dashboard.telemetry import TelemetryReceiver
-from dashboard.gui import update_screen, launch_gui, set_start_callback
+from dashboard.gui import update_screen, launch_gui, set_start_callback,set_return_callback
 import struct
-print("test")
 
 
 def format_time(seconds_float):
@@ -35,7 +34,7 @@ def handle_data(data):
 
         }
         
-        print("split=======")
+        print("=======")
         print("Speed:", parsed["speed_kph"]*3.6, "Gear:",
                parsed["gear"], "rpm:", parsed["rpm"], "max_rpm", parsed["max_rpm"], "fuel:", parsed["fuel"], "accel:", parsed["accel"], "pos:", parsed["pos"], "lap:", format_time(parsed["lap_time"]), "RL:", parsed["tire_temp_rear_left"], "RR:", parsed["tire_temp_rear_right"])
         update_screen(parsed["speed_kph"]*3.6, parsed["gear"], parsed["rpm"], parsed["pos"], format_time(parsed["lap_time"]), format_time(parsed["last_lap_time"]), format_time(parsed["best_lap_time"]), parsed["lap_number"], parsed["accel"], parsed["tire_temp_front_left"], parsed["tire_temp_front_right"], parsed["tire_temp_rear_left"], parsed["tire_temp_rear_right"], parsed["brake"], parsed["fuel"], parsed["max_rpm"])
@@ -55,11 +54,17 @@ def on_start(port, game_mode):
     receiver = TelemetryReceiver(port=port)
     receiver.data_callback = handle_data
     receiver.start()
-    
 
+def stop():
+    global receiver
+    if receiver:
+        receiver.stop()
+        receiver = None
 
-print("test2")
+def return_callback():
+    stop()
 
+set_return_callback(return_callback)
 
 set_start_callback(on_start)
 launch_gui()
